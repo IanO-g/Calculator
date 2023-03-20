@@ -15,30 +15,46 @@ function divide(x,y){
 }
 
 function operate(x,y,z){
-    if (z == 'add'){
+    if (z == '+'){
         return add(x,y);
-    } else if (z == 'subtract'){
+    } else if (z == '-'){
         return subtract(x,y);
-    } else if(z == 'multiply'){
+    } else if(z == 'x'){
         return multiply(x,y);
-    } else if(z == 'divide'){
+    } else if(z == '÷'){
         return divide(x,y);
     } return;
 }
 
 const numArray = [];
-function showNum(e){
+function calc(e){
     e.stopPropagation()
-    numArray.push(e.target.innerText);
-    disNum = numArray.join('');
-    display.innerText = disNum;
-}
-
-function opHere(e){
-    if(e.target.innerText == 'C'){
-        display.innerText = ''
-        numArray.length = 0
+    if(e.target.class = 'numbers') {
+        numArray.push(e.target.innerText);
+        disNum = numArray.join('');
+        display.innerText = disNum;
     }
+
+    if(e.target.innerText == 'C'){
+        display.innerText = '';
+        numArray.length = 0;
+    }
+
+    if(e.target.innerText == 'x'){
+        firstArray = numArray.slice();
+        numArray.length = 0;
+        display.innerText = '';
+        return firstArray;
+    }
+
+    if(e.target.innerText == '='){
+        let z = firstArray.pop(),
+            y = firstArray.join(''),
+            x = numArray.slice(0,-1).join('');
+        
+        const answer =  operate(x,y,z);
+        display.innerText = answer;
+} 
 }
 
 
@@ -47,8 +63,6 @@ opBtns = document.querySelectorAll('.operators')
 allBtns = document.querySelectorAll('button')
 display = document.querySelector('.display')
 
-numBtns.forEach(button => 
-    button.addEventListener('click',showNum))
 
-opBtns.forEach(button => 
-    button.addEventListener('click',opHere))
+allBtns.forEach(button => 
+        button.addEventListener('click',calc))
