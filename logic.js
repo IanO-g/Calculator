@@ -54,7 +54,10 @@ function calc(e){
         
         const answer =  operate(x,y,z);
         display.innerText = answer;
-} 
+        numArray.length = 0
+        numArray.push(answer)
+    } 
+    
 }
 
 
