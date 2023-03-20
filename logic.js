@@ -40,7 +40,7 @@ function calc(e){
         numArray.length = 0;
     }
 
-    if(e.target.innerText == 'x'){
+    if(e.target.value == 'operate'){
         firstArray = numArray.slice();
         numArray.length = 0;
         display.innerText = '';
@@ -49,8 +49,8 @@ function calc(e){
 
     if(e.target.innerText == '='){
         let z = firstArray.pop(),
-            y = firstArray.join(''),
-            x = numArray.slice(0,-1).join('');
+            x = firstArray.join(''),
+            y = numArray.slice(0,-1).join('');
         
         const answer =  operate(x,y,z);
         display.innerText = answer;
