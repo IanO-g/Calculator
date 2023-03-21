@@ -27,24 +27,54 @@ function operate(x,y,z){
 }
 
 const numArray = [];
+const displayArray = [];
+const operatorArray = [];
+
 function calc(e){
     e.stopPropagation()
     if(e.target.class = 'numbers') {
         numArray.push(e.target.innerText);
-        disNum = numArray.join('');
-        display.innerText = disNum;
+        displayArray.push(e.target.innerText);
+        disNum = displayArray.join('');
+        display.innerText = disNum
     }
 
     if(e.target.innerText == 'C'){
         display.innerText = '';
         numArray.length = 0;
+        displayArray.length = 0;
+        operatorArray.length = 0;
     }
 
     if(e.target.value == 'operate'){
-        firstArray = numArray.slice();
-        numArray.length = 0;
+        const firstArray = numArray.slice();
+        const input = firstArray.join('').split(/\+|\-|\x|\÷/);
+        const inputNums = input.map(Number);
+        operatorArray.push(e.target.innerText);
+        operator = operatorArray[0];
+
+        displayArray.length = 0;
         display.innerText = '';
-        return firstArray;
+        
+        firstInput = inputNums[0];
+        secondInput = inputNums[1];
+ 
+        let x = firstInput,
+            y = secondInput;
+            z = operator
+         
+            if (y == ''){
+                return;
+            } else {
+                const answer = operate(x,y,z);
+                display.innerText = answer;
+                numArray.length = 0;
+                displayArray.length = 0;
+                operatorArray.splice(0,1);
+                numArray.push(answer,z);
+                console.log(z);
+            }
+    
     }
 
     if(e.target.innerText == '='){
@@ -56,6 +86,7 @@ function calc(e){
         display.innerText = answer;
         numArray.length = 0
         numArray.push(answer)
+       
     } 
     
 }
