@@ -48,7 +48,7 @@ function calc(e){
 
     if(e.target.value == 'operate'){
         const firstArray = numArray.slice();
-        const input = firstArray.join('').split(/\+|\-|\x|\÷/);
+        const input = firstArray.join('').split(/\+|\-|\x|\÷|\=/);
         const inputNums = input.map(Number);
         operatorArray.push(e.target.innerText);
         operator = operatorArray[0];
@@ -60,35 +60,32 @@ function calc(e){
         secondInput = inputNums[1];
  
         let x = firstInput,
-            y = secondInput;
-            z = operator
+            y = secondInput,
+            z = operator;
          
             if (y == ''){
                 return;
             } else {
                 const answer = operate(x,y,z);
                 display.innerText = answer;
+                
+                
                 numArray.length = 0;
                 displayArray.length = 0;
-                operatorArray.splice(0,1);
-                numArray.push(answer,z);
-                console.log(z);
-            }
-    
+                operatorArray.splice(0,1); // staggers operators as the first iteration returns with y = ''
+                numArray.push(answer,z); // allows for split regex
+            } 
     }
 
     if(e.target.innerText == '='){
-        let z = firstArray.pop(),
-            x = firstArray.join(''),
-            y = numArray.slice(0,-1).join('');
+        const input = numArray.join('').split(/\+|\-|\x|\÷|\=/);
+        let x = Number(input[0]),
+            y = Number(input[1]),
+            z = operatorArray[0];
         
-        const answer =  operate(x,y,z);
+        const answer = operate(x,y,z);
         display.innerText = answer;
-        numArray.length = 0
-        numArray.push(answer)
-       
-    } 
-    
+  } 
 }
 
 
