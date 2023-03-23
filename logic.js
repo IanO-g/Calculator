@@ -69,7 +69,6 @@ function calc(e){
                 const answer = operate(x,y,z);
                 display.innerText = answer;
                 
-                
                 numArray.length = 0;
                 displayArray.length = 0;
                 operatorArray.splice(0,1); // staggers operators as the first iteration returns with y = ''
@@ -84,7 +83,12 @@ function calc(e){
             z = operatorArray[0];
         
         const answer = operate(x,y,z);
-        display.innerText = answer;
+        if(answer == undefined){
+            displayArray.length = 0;
+            display.innerText = '';
+            numArray.length = 0;
+        }else{
+        display.innerText = answer;}
   } 
 }
 
