@@ -29,6 +29,7 @@ function operate(x,y,z){
 const numArray = [];
 const displayArray = [];
 const operatorArray = [];
+const negativeArray = [];
 
 function calc(e){
     e.stopPropagation()
@@ -44,11 +45,13 @@ function calc(e){
         numArray.length = 0;
         displayArray.length = 0;
         operatorArray.length = 0;
+        negativeArray.length = 0;
+        
     }
 
     if(e.target.value == 'operate'){
         const firstArray = numArray.slice();
-        const input = firstArray.join('').split(/\+|\-|\x|\÷|\=/);
+        const input = firstArray.join('').split(/\+|\-|\x|\÷|\=|\//);
         const inputNums = input.map(Number);
         operatorArray.push(e.target.innerText);
         operator = operatorArray[0];
@@ -62,7 +65,12 @@ function calc(e){
         let x = firstInput,
             y = secondInput,
             z = operator;
-         
+        if(negativeArray[0] != undefined){
+            x = negativeArray[0];
+        }
+        console.log(x)
+        console.log(input)
+        console.log(inputNums)
             if (y == ''){
                 return;
             } else {
@@ -72,32 +80,52 @@ function calc(e){
                 numArray.length = 0;
                 displayArray.length = 0;
                 operatorArray.splice(0,1); // staggers operators as the first iteration returns with y = ''
-                numArray.push(answer,z); // allows for split regex
+                if (Math.sign(answer) == -1){
+                    negativeArray.push(answer)
+                }else{
+                numArray.push(answer,z);
+            } // allows for split regex
             } 
     }
 
     if(e.target.innerText == '='){
-        const input = numArray.join('').split(/\+|\-|\x|\÷|\=/);
+        const input = numArray.join('').split(/\+|\-|\x|\÷|\=|\//);
         let x = Number(input[0]),
             y = Number(input[1]),
             z = operatorArray[0];
         
         const answer = operate(x,y,z);
-        if(answer == undefined){
+        if(y == ''){
+            display.innerText = x;
+        } else if(answer == undefined){
             displayArray.length = 0;
             display.innerText = '';
             numArray.length = 0;
+        }else if(Math.sign(answer) == -1){
+            negativeArray.push(answer);
+            display.innerText = answer;
         }else{
         display.innerText = answer;}
   } 
 }
 
+function negative(){
+    let oneArray = displayArray.join('').split(/\+|\-|\//),
+        newVal = oneArray.join('');
+    
+    negV = newVal * -1;
+    display.innerText = negV;
+    negativeArray.push(negV);
+}
 
 numBtns = document.querySelectorAll('.numbers')
 opBtns = document.querySelectorAll('.operators')
 allBtns = document.querySelectorAll('button')
 display = document.querySelector('.display')
+negBtn = document.querySelector('#negative')
 
 
 allBtns.forEach(button => 
         button.addEventListener('click',calc))
+
+negBtn.addEventListener('click',negative)

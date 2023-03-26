@@ -47,3 +47,12 @@ button.numbers{
     height:50px;
     width:auto;
 }
+
+.firstRow{
+    display: flex;
+}
+
+.lastRow{
+    display: flex;
+    ;
+}

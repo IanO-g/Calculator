@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculator</title>
-    <script src="logic.js" defer></script>
+    <script src="logic2.js" defer></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -15,6 +15,11 @@
     <div class ='aContainer'>
         
         <div class="display">Lorem</div>
+        <div class="firstRow">
+            <button id="clear">C</button>
+            <button id="negative">+/-</button>
+            <button id="percent">%</button>
+        </div>
         <div class="bContainer">
             <div class="numbers">
                 <button class="numbers" value="seven">7</button>
@@ -28,14 +33,20 @@
                 <button class="numbers" value="three">3</button>
             </div>
             <div class="operators">
-                <button class="operators" id="clear">C</button>
-                <button class="operators" value= 'operate' id="divide">÷</button>
-                <button class="operators" value= 'operate' id="multiply">x</button>
-                <button class="operators" value= 'operate' id="subtract">-</button>
-                <button class="operators" value= 'operate' id="add">+</button>
-                <button class="operators" id="equals">=</button>
+                
+                <button class="operators" id="divide">÷</button>
+                <button class="operators" id="multiply">x</button>
+                <button class="operators" id="subtract">-</button>
+                <button class="operators" id="add">+</button>
+                
             </div>
         </div>
+        <div class="lastRow">
+            <button class="numbers" value="zero">0</button>
+            <button class="numbers" id="decimal">.</button>
+            <button id="equals">=</button>
+        </div>
+
     </div>
 
 
