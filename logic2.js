@@ -60,7 +60,13 @@ function calc(){
     console.log(x,y,z)
     if (y == undefined){
         return;
-    } else { 
+    } else if(y == 0 && z == '÷'){
+        display.innerText = 'indeterminate of an undefined value must surely have a limit?';
+        setTimeout(()=> {
+            display.innerText = '';
+            clear;
+        }, 2 * 1000);
+    }else { 
         const answer = operate(x,y,z);
         display.innerText = answer;
         inputArray.length = 0;
@@ -82,11 +88,18 @@ function equals(){
         operatorArray.length = 0;
         console.log(x,y,z)
         return;
-    } else if(answer == undefined){
+    }else if(y == 0 && z == '÷'){
+        display.innerText = 'indeterminate of an undefined value must surely have a limit?';
+        setTimeout(()=> {
+            display.innerText = '';
+            clear;
+        }, 2 * 1000);
+    }else if(answer == undefined){
         display.innerText = 'error';
-        console.log(x,y,z)
-        inputArray.length = 0;
-        operatorArray.length = 0;
+        setTimeout(()=> {
+            display.innerText = '';
+            clear;
+        }, 2 * 1000);
     } else{
         display.innerText = answer;
         inputArray.push(answer);
@@ -134,6 +147,22 @@ function percent(){
     displayArray.push(percentInput);
 }
 
+function backspace(){
+    const backArray = displayArray.slice(0,-1);
+    backInput = backArray.join(''); // do not convert to number as it will auto evaluate and delete a decimal making 65. = 65
+    
+    const deciCheck = displayArray.slice().pop();
+        if(deciCheck == '.'){
+            decBtn.disabled = false;
+        }
+
+    displayArray.length = 0;
+    numArray.length = 0;
+    displayArray.push(...backArray); // push a spread operator to allow for slice operation
+    numArray.push(backInput);
+    display.innerText = backInput; 
+}
+
 
 numBtns = document.querySelectorAll('.numbers');
 opBtns = document.querySelectorAll('.operators');
@@ -143,6 +172,7 @@ clearBtn = document.querySelector('#clear');
 eqBtn = document.querySelector('#equals');
 percentBtn = document.querySelector('#percent');
 decBtn = document.querySelector('#decimal');
+backBtn = document.querySelector('#backspace');
 
 
 opBtns.forEach(button => 
@@ -168,6 +198,8 @@ negBtn.addEventListener('click',negative);
 percentBtn.addEventListener('click',percent);
 
 decBtn.addEventListener('click', function (){decBtn.disabled = true});
+
+backBtn.addEventListener('click',backspace);
 
 
 
