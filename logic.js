@@ -27,105 +27,142 @@ function operate(x,y,z){
 }
 
 const numArray = [];
-const displayArray = [];
 const operatorArray = [];
-const negativeArray = [];
+const inputArray = [];
+
+
+function logNum(e){
+    e.stopPropagation()
+    numArray.push(e.target.innerText);
+    dispNum = numArray.slice().join('');
+    display.innerText = dispNum;
+}
+
+function logOp(e){
+    e.stopPropagation();
+    operatorArray.push(e.target.innerText);
+}
+
+function logInput(){
+    const input = numArray.slice().join('');
+    numArray.length = 0;
+    if(input != ''){
+    inputArray.push(input)}
+}
 
 function calc(e){
-    e.stopPropagation()
-    if(e.target.class = 'numbers') {
-        numArray.push(e.target.innerText);
-        displayArray.push(e.target.innerText);
-        disNum = displayArray.join('');
-        display.innerText = disNum
-    }
-
-    if(e.target.innerText == 'C'){
-        display.innerText = '';
-        numArray.length = 0;
-        displayArray.length = 0;
+    let calcArray = inputArray.slice().map(Number),
+        x = calcArray[0],
+        y = calcArray [1],
+        z = operatorArray[0];
+    console.log(x,y,z)
+    if (!y){
         operatorArray.length = 0;
-        negativeArray.length = 0;
-        
-    }
-
-    if(e.target.value == 'operate'){
-        const firstArray = numArray.slice();
-        const input = firstArray.join('').split(/\+|\-|\x|\÷|\=|\//);
-        const inputNums = input.map(Number);
         operatorArray.push(e.target.innerText);
-        operator = operatorArray[0];
-
-        displayArray.length = 0;
-        display.innerText = '';
-        
-        firstInput = inputNums[0];
-        secondInput = inputNums[1];
- 
-        let x = firstInput,
-            y = secondInput,
-            z = operator;
-        if(negativeArray[0] != undefined){
-            x = negativeArray[0];
-        }
-        console.log(x)
-        console.log(input)
-        console.log(inputNums)
-            if (y == ''){
-                return;
-            } else {
-                const answer = operate(x,y,z);
-                display.innerText = answer;
-                
-                numArray.length = 0;
-                displayArray.length = 0;
-                operatorArray.splice(0,1); // staggers operators as the first iteration returns with y = ''
-                if (Math.sign(answer) == -1){
-                    negativeArray.push(answer)
-                }else{
-                numArray.push(answer,z);
-            } // allows for split regex
-            } 
-    }
-
-    if(e.target.innerText == '='){
-        const input = numArray.join('').split(/\+|\-|\x|\÷|\=|\//);
-        let x = Number(input[0]),
-            y = Number(input[1]),
-            z = operatorArray[0];
-        
+        return;
+    } else { 
         const answer = operate(x,y,z);
-        if(y == ''){
-            display.innerText = x;
-        } else if(answer == undefined){
-            displayArray.length = 0;
-            display.innerText = '';
-            numArray.length = 0;
-        }else if(Math.sign(answer) == -1){
-            negativeArray.push(answer);
-            display.innerText = answer;
-        }else{
-        display.innerText = answer;}
-  } 
+        display.innerText = answer;
+        inputArray.length = 0;
+        operatorArray.splice(0,1);
+        inputArray.push(answer);
+    }
+}
+
+function clear(){
+    inputArray.length = 0;
+    operatorArray.length = 0;
+    numArray.length = 0;
+    display.innerText = '';
+    decBtn.disabled = false;
 }
 
 function negative(){
-    let oneArray = displayArray.join('').split(/\+|\-|\//),
-        newVal = oneArray.join('');
-    
-    negV = newVal * -1;
-    display.innerText = negV;
-    negativeArray.push(negV);
+    const negativeArray = displayArray.slice();
+    newInput = Number(negativeArray.join(''));
+        if (Math.sign(newInput) == -1){
+            posInput = newInput * -1;
+            display.innerText = posInput;
+            numArray.length = 0;
+            displayArray.length = 0;
+            numArray.push(posInput);
+            displayArray.push(posInput)
+            
+        } else {
+            negInput = newInput * -1;
+            display.innerText = negInput;
+            numArray.length = 0;
+            displayArray.length = 0;
+            numArray.push(negInput);
+            displayArray.push(negInput)
+        }
 }
 
-numBtns = document.querySelectorAll('.numbers')
-opBtns = document.querySelectorAll('.operators')
-allBtns = document.querySelectorAll('button')
-display = document.querySelector('.display')
-negBtn = document.querySelector('#negative')
+function percent(){
+    const percentArray = displayArray.slice();
+    newInput = Number(percentArray.join(''));
+    percentInput = newInput/100;
+    display.innerText = percentInput;
+    numArray.length = 0;
+    displayArray.length = 0;
+    numArray.push(percentInput);
+    displayArray.push(percentInput);
+}
+
+function backspace(){
+    const backArray = displayArray.slice(0,-1);
+    backInput = backArray.join(''); // do not convert to number as it will auto evaluate and delete a decimal making 65. = 65
+    
+    const deciCheck = displayArray.slice().pop();
+        if(deciCheck == '.'){
+            decBtn.disabled = false;
+        }
+
+    displayArray.length = 0;
+    numArray.length = 0;
+    displayArray.push(...backArray); // push a spread operator to allow for slice operation
+    numArray.push(backInput);
+    display.innerText = backInput; 
+}
 
 
-allBtns.forEach(button => 
-        button.addEventListener('click',calc))
+numBtns = document.querySelectorAll('.numbers');
+opBtns = document.querySelectorAll('.operators');
+display = document.querySelector('.display');
+negBtn = document.querySelector('#negative');
+clearBtn = document.querySelector('#clear');
+eqBtn = document.querySelector('#equals');
+percentBtn = document.querySelector('#percent');
+decBtn = document.querySelector('#decimal');
+backBtn = document.querySelector('#backspace');
 
-negBtn.addEventListener('click',negative)
+
+opBtns.forEach(button => 
+         button.addEventListener('click',logInput))
+
+opBtns.forEach(button =>
+        button.addEventListener('click',logOp))
+
+opBtns.forEach(button => 
+            button.addEventListener('click',calc))
+
+numBtns.forEach(button =>
+            button.addEventListener('click',logNum))
+
+
+eqBtn.addEventListener('click' , logInput);
+eqBtn.addEventListener('click' , calc);
+
+clearBtn.addEventListener('click',clear);
+
+negBtn.addEventListener('click',negative);
+
+percentBtn.addEventListener('click',percent);
+
+decBtn.addEventListener('click', function (){decBtn.disabled = true});
+
+backBtn.addEventListener('click',backspace);
+
+
+// change array for percent and decimal 
+// enable decimal button 
