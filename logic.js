@@ -55,12 +55,15 @@ function calc(e){
         x = calcArray[0],
         y = calcArray [1],
         z = operatorArray[0];
-    console.log(x,y,z)
-    if (!y){
+    if(z == '÷' && y == 0){
+        display.innerText = 'The undefined value of an indeterminate must surely have a limit?' 
+        setTimeout(() => {clear(); 
+        display.innerText = 0} , 2 * 1000);
+    }else if (!y){
         operatorArray.length = 0;
         operatorArray.push(e.target.innerText);
         return;
-    } else { 
+    }else { 
         const answer = operate(x,y,z);
         display.innerText = answer;
         inputArray.length = 0;
@@ -113,6 +116,17 @@ function backspace(){
     display.innerText = backInput; 
 }
 
+function check(){
+    let input = display.innerText,
+        check = input.includes('.');
+
+        if (check != false){
+            decBtn.disabled = true;
+        } else{
+            decBtn.disabled = false;
+        }
+}
+
 
 numBtns = document.querySelectorAll('.numbers');
 opBtns = document.querySelectorAll('.operators');
@@ -136,10 +150,13 @@ opBtns.forEach(button =>
 
 numBtns.forEach(button =>
             button.addEventListener('click',logNum))
+            
+numBtns.forEach(button =>
+                button.addEventListener('click',check))
 
 
-eqBtn.addEventListener('click' , logInput);
-eqBtn.addEventListener('click' , calc);
+eqBtn.addEventListener('click',logInput);
+eqBtn.addEventListener('click',calc);
 
 clearBtn.addEventListener('click',clear);
 
@@ -147,10 +164,6 @@ negBtn.addEventListener('click',negative);
 
 percentBtn.addEventListener('click',percent);
 
-decBtn.addEventListener('click', function (){decBtn.disabled = true});
-
 backBtn.addEventListener('click',backspace);
 
 
-// change array for percent and decimal 
-// enable decimal button 
