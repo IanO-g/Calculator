@@ -46,8 +46,9 @@ function logOp(e){
 function logInput(){
     const input = numArray.slice().join('');
     numArray.length = 0;
-    if(input != ''){
-    inputArray.push(input)}
+        if(input != ''){
+           inputArray.push(input)
+        }
 }
 
 function calc(e){
@@ -55,28 +56,29 @@ function calc(e){
         x = calcArray[0],
         y = calcArray [1],
         z = operatorArray[0];
-    if(z == '÷' && y == 0){
-        display.innerText = 'The undefined value of an indeterminate must surely have a limit?' 
-        setTimeout(() => {clear(); 
-        display.innerText = 0} , 2 * 1000);
-    }else if (!y){
-        operatorArray.length = 0;
-        operatorArray.push(e.target.innerText);
-        return;
-    }else { 
-        const answer = operate(x,y,z);
-        display.innerText = answer;
-        inputArray.length = 0;
-        operatorArray.splice(0,1);
-        inputArray.push(answer);
-    }
+    
+        if(z == '÷' && y == 0){
+            display.innerText = 'The undefined value of an indeterminate must surely have a limit?' 
+            setTimeout(() => {clear(); 
+            display.innerText = 0} , 2 * 1000);
+        }else if(y || y == 0){
+            const answer = operate(x,y,z);
+                display.innerText = answer;
+                inputArray.length = 0;
+                operatorArray.splice(0,1);
+                inputArray.push(answer);
+        }else if (!y){
+            operatorArray.length = 0;
+            operatorArray.push(e.target.innerText);
+            return;
+        }
 }
 
 function clear(){
     inputArray.length = 0;
     operatorArray.length = 0;
     numArray.length = 0;
-    display.innerText = '';
+    display.innerText = 0;
     decBtn.disabled = false;
 }
 
@@ -101,6 +103,7 @@ function percent(){
         display.innerText = percentInput;
         numArray.length = 0;
         numArray.push(percentInput);
+        decBtn.disabled = true;
 }
 
 function backspace(){
@@ -167,3 +170,8 @@ percentBtn.addEventListener('click',percent);
 backBtn.addEventListener('click',backspace);
 
 
+// Active states for operator buttons
+// fix operations with 0 
+// CSS format 
+// rounding and overflow
+// percent button creates a decimal, disable decimal button on click *finished but add to commit note
