@@ -171,7 +171,5 @@ backBtn.addEventListener('click',backspace);
 
 
 // Active states for operator buttons
-// fix operations with 0 
 // CSS format 
 // rounding and overflow
-// percent button creates a decimal, disable decimal button on click *finished but add to commit note

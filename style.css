@@ -1,55 +1,55 @@
+
 .aContainer{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 50px;
+    margin-top: 30px;;
 }
 
 .bContainer{
     display: flex;
-    justify-content: center;
-    align-items: center;
+    gap: 1px;
 }
-.numbers{
+.cContainer{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 1px;
+    row-gap: 1px;
 }
 
 .operators{
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 1px;
 }
 
 .display{
-    height: 50px;
-    width: 135px;
+    height: 30px;
+    width: 100px;
     background-color: rgb(71, 169, 255);
     display: flex;
     justify-content: flex-end;
     align-items: center;
     padding-right: 5px;
+    margin-bottom: 2px;
 }
 
 button{
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-button.operators{
     height:25px;
     width:25px;
 }
 
-button.numbers{
-    height:50px;
-    width:auto;
-}
+
 
 .firstRow{
     display: flex;
+    gap:1px;
+    margin-bottom: 1px;;
 }
 
 .lastRow{
