@@ -78,49 +78,37 @@ function clear(){
 }
 
 function negative(){
-    const negativeArray = displayArray.slice();
-    newInput = Number(negativeArray.join(''));
+    let newInput = Number(display.innerText);
         if (Math.sign(newInput) == -1){
             posInput = newInput * -1;
             display.innerText = posInput;
             numArray.length = 0;
-            displayArray.length = 0;
             numArray.push(posInput);
-            displayArray.push(posInput)
-            
         } else {
             negInput = newInput * -1;
             display.innerText = negInput;
             numArray.length = 0;
-            displayArray.length = 0;
             numArray.push(negInput);
-            displayArray.push(negInput)
         }
 }
 
 function percent(){
-    const percentArray = displayArray.slice();
-    newInput = Number(percentArray.join(''));
-    percentInput = newInput/100;
-    display.innerText = percentInput;
-    numArray.length = 0;
-    displayArray.length = 0;
-    numArray.push(percentInput);
-    displayArray.push(percentInput);
+    let newInput = Number(display.innerText);
+        percentInput = newInput/100;
+        display.innerText = percentInput;
+        numArray.length = 0;
+        numArray.push(percentInput);
 }
 
 function backspace(){
-    const backArray = displayArray.slice(0,-1);
-    backInput = backArray.join(''); // do not convert to number as it will auto evaluate and delete a decimal making 65. = 65
+    let backInput = display.innerText.slice(0,-1);
     
-    const deciCheck = displayArray.slice().pop();
+    const deciCheck = display.innerText.slice(-1);
         if(deciCheck == '.'){
             decBtn.disabled = false;
         }
 
-    displayArray.length = 0;
     numArray.length = 0;
-    displayArray.push(...backArray); // push a spread operator to allow for slice operation
     numArray.push(backInput);
     display.innerText = backInput; 
 }
