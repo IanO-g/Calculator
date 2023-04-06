@@ -149,7 +149,7 @@ opBtns.forEach(button =>
         button.addEventListener('click',logOp))
 
 opBtns.forEach(button => 
-            button.addEventListener('click',calc))
+            button.addEventListener('click',calc))     
 
 numBtns.forEach(button =>
             button.addEventListener('click',logNum))
@@ -170,6 +170,7 @@ percentBtn.addEventListener('click',percent);
 backBtn.addEventListener('click',backspace);
 
 
-// Active states for operator buttons
+
 // CSS format 
 // rounding and overflow
+// decimal button disabled on secon doperator sequence
