@@ -1,11 +1,32 @@
 
+body{
+    background-color: rgb(102, 102, 102);
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 .aContainer{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 30px;;
+    margin-top: 30px;
+    height:200px;
 }
+
+.border{
+    width: 120px;
+    height: 160px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: black;
+}
+
 
 .bContainer{
     display: flex;
@@ -27,24 +48,34 @@
 
 .display{
     height: 30px;
-    width: 100px;
-    background-color: rgb(71, 169, 255);
+    width: 98px;
+    background: rgba(0, 180, 255, 0.5);
     display: flex;
     justify-content: flex-end;
     align-items: center;
     padding-right: 5px;
     margin-bottom: 2px;
+    padding-left: 5px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(0, 221, 221);
+
 }
 
 button{
+    appearance: none;
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
     height:25px;
     width:25px;
+    border: 1px black;
+    transition: .4s;
 }
-
-
 
 .firstRow{
     display: flex;
@@ -52,7 +83,69 @@ button{
     margin-bottom: 1px;;
 }
 
-.lastRow{
-    display: flex;
-    ;
+button.numbers{
+    background-color: black;
+    color: aqua;
+}
+
+button.operators{
+    background-color: rgb(255, 204, 36);
+}
+
+button#clear, button#backspace{
+    background-color: coral;
+}
+
+button#percent, button#negative{
+    background-color: white;
+}
+
+button#equals{
+    background-color: aqua;
+    position: relative;
+}
+
+button#equals:hover, 
+button#equals:focus {
+    box-shadow:  0em 0em 0.15em .05em aqua;
+    transform: translateY(-0.05em);
+    text-shadow: 0 0 1px black,
+    0 0 0px black,
+    0 0 0px black;
+}
+
+button.numbers:hover,
+button.numbers:focus {
+    box-shadow:  0em 0em 0.15em .05em white;
+    transform: translateY(-0.05em);
+    text-shadow: 0 0 1px aqua,
+    0 0 0px aqua,
+    0 0 0px aqua;
+}
+
+button.operators:hover,
+button.operators:focus {
+    box-shadow:  0em 0em 0.15em .05em  white;
+    transform: translateY(-0.05em);
+    text-shadow: 0 0 .5px black,
+    0 0 0px black,
+    0 0 0px black;
+}
+
+button.delete:hover,
+button.delete:focus {
+    box-shadow:  0em 0em 0.15em .05em white;
+    transform: translateY(-0.05em);
+    text-shadow: 0 0 .5px black,
+    0 0 0px black,
+    0 0 0px black;
+}
+
+button.misc:hover,
+button.misc:focus {
+    box-shadow:  0em 0em 0.15em .05em white;
+    transform: translateY(-0.05em);
+    text-shadow: 0 0 .5px black,
+    0 0 0px black,
+    0 0 0px black;
 }
