@@ -1,6 +1,6 @@
 
 body{
-    background-color: rgb(56, 56, 56);
+    background-color: black;
     min-height: 100vh;
     margin: 0;
     padding: 0;
@@ -12,7 +12,7 @@ body{
     justify-content: center;
     align-items: center;
     margin-top: 30px;
-    height:200px;
+    width: 100vw;
 }
 
 .border{
@@ -26,6 +26,7 @@ body{
     border-style: solid;
     border-color: black;
     background-color: black;
+    box-shadow:  0em 0em 0.15em .05em  aqua;
 }
 
 
@@ -50,7 +51,7 @@ body{
 .display{
     height: 30px;
     width: 91px;
-    background: rgba(0, 180, 255, 0.5);
+    background: rgba(0, 180, 255, 0.1);
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -62,7 +63,10 @@ body{
     border-color: rgb(0, 221, 221);
     overflow: hidden;
     font-family: Orbitron;
-
+    color: aqua;
+    text-shadow: 0 0 .8px aqua,
+    0 0 0px aqua,
+    0 0 0px aqua;
 }
 
 button{
@@ -96,7 +100,12 @@ button.operators{
     background-color: rgb(255, 204, 36);
 }
 
-
+button#backspace{
+    text-align: center;
+    padding-bottom: 5px;
+    font-size: 15px;
+    font-weight: bolder;
+}
 
 button#clear, button#backspace{
     background-color: coral;
@@ -140,7 +149,7 @@ button.operators:focus {
 button.delete:hover {
     box-shadow:  0em 0em 0.1em .05em #ee1e1e;
     transform: translateY(-0.05em);
-    text-shadow: 0 0 .5px black,
+    text-shadow: 0 0 .3px black,
     0 0 0px black,
     0 0 0px black;
 }
