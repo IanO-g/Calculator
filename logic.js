@@ -41,6 +41,7 @@ function logNum(e){
 function logOp(e){
     e.stopPropagation();
     operatorArray.push(e.target.innerText);
+    decBtn.disabled = false; // allows for next input to contain a decimal
 }
 
 function logInput(){
@@ -67,6 +68,7 @@ function calc(e){
                 inputArray.length = 0;
                 operatorArray.splice(0,1);
                 inputArray.push(answer);
+                decBtn.disabled = false;
         }else if (!y){
             operatorArray.length = 0;
             operatorArray.push(e.target.innerText);
@@ -173,4 +175,4 @@ backBtn.addEventListener('click',backspace);
 
 // CSS format 
 // rounding and overflow
-// decimal button disabled on secon doperator sequence
+
