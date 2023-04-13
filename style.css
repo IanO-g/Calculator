@@ -163,3 +163,62 @@ button.misc:hover {
     0 0 0px black;
 }
 
+#scroll {
+  font-size: 10px;
+  white-space: nowrap;
+  color: red;
+    text-shadow: 0 0 .8px red,
+    0 0 0px red,
+    0 0 0px red;
+  -moz-transform: translateX(100%);
+  -webkit-transform: translateX(100%);
+  transform: translateX(100%);
+  
+  -moz-animation: my-animation 16s linear infinite;
+  -webkit-animation: my-animation 16s linear infinite;
+  animation: my-animation 16s linear infinite;
+}
+
+@keyframes my-animation {
+    from {
+      -moz-transform: translateX(100%);
+      -webkit-transform: translateX(100%);
+      transform: translateX(100%);
+    }
+    to {
+      -moz-transform: translateX(-100%);
+      -webkit-transform: translateX(-100%);
+      transform: translateX(-100%);
+    }
+}
+
+.wrong{
+    width: 105px;
+    height: 170px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: black;
+    background-color: black;
+    box-shadow:  0em 0em 0.15em .05em  rgb(255, 0, 0);
+}
+
+.wrongDisplay{
+    height: 30px;
+    width: 91px;
+    background: rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 3px;
+    padding-left: 5px;
+    margin-bottom: 2px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(221, 0, 0);
+    overflow: hidden;
+    font-family: Orbitron;
+}

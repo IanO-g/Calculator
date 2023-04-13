@@ -60,11 +60,17 @@ function calc(e){
     
         if(z == '÷' && y == 0){
             const scrollText = document.createElement('p');
+            const border = document.querySelector('.border');
             scrollText.setAttribute('id','scroll')
             display.appendChild(scrollText);
-            scrollText.innerText = 'The undefined value of an indeterminate must surely have a limit?' ;
-            // setTimeout(() => {clear(); 
-            // display.innerText = 0} , 2 * 1000);
+            scrollText.innerText = 'The undefined value of an indeterminate must surely have a limit?';
+            border.classList.toggle('wrong');
+            display.classList.toggle('wrongDisplay');
+            setTimeout(() => {clear(); 
+                display.innerText = 0;
+                border.classList.toggle('wrong');
+                display.classList.toggle('wrongDisplay');
+                } , 11 * 1000);
         }else if(y || y == 0){
             const answer = operate(x,y,z);
                 display.innerText = answer;
