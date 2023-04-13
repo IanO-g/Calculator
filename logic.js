@@ -59,9 +59,12 @@ function calc(e){
         z = operatorArray[0];
     
         if(z == '÷' && y == 0){
-            display.innerText = 'The undefined value of an indeterminate must surely have a limit?' 
-            setTimeout(() => {clear(); 
-            display.innerText = 0} , 2 * 1000);
+            const scrollText = document.createElement('p');
+            scrollText.setAttribute('id','scroll')
+            display.appendChild(scrollText);
+            scrollText.innerText = 'The undefined value of an indeterminate must surely have a limit?' ;
+            // setTimeout(() => {clear(); 
+            // display.innerText = 0} , 2 * 1000);
         }else if(y || y == 0){
             const answer = operate(x,y,z);
                 display.innerText = answer;
@@ -69,6 +72,7 @@ function calc(e){
                 operatorArray.splice(0,1);
                 inputArray.push(answer);
                 decBtn.disabled = false;
+                console.log(overFlow(answer)); // this allows answers > 1e9 to be presented in exponential notation; reason unknown
         }else if (!y){
             operatorArray.length = 0;
             operatorArray.push(e.target.innerText);
@@ -132,6 +136,31 @@ function check(){
         }
 }
 
+function sizeAdjust(){
+    const maxFont = 16;
+          minFont = 12;
+    let input = display.innerText,
+        fontSize = maxFont;
+        canvas = document.createElement('canvas');
+        context = canvas.getContext('2d');
+        context.fontSize = fontSize + 'px';
+        width = context.measureText(input).width;
+        display.style.fontSize = fontSize + 'px';
+
+        while(fontSize > minFont && width > 39){
+            fontSize--;
+            display.style.fontSize = fontSize +'px';
+         }
+ }
+
+ function overFlow(){
+    let input = display.innerText,
+        maxVal = 1e9;
+        if(input >= maxVal){
+            display.innerText = Number.parseFloat(input).toExponential(2)
+        }
+ }
+
 
 numBtns = document.querySelectorAll('.numbers');
 opBtns = document.querySelectorAll('.operators');
@@ -159,6 +188,12 @@ numBtns.forEach(button =>
 numBtns.forEach(button =>
                 button.addEventListener('click',check))
 
+numBtns.forEach(button =>
+                button.addEventListener('click',sizeAdjust))
+
+numBtns.forEach(button =>
+                button.addEventListener('click',overFlow))
+
 
 eqBtn.addEventListener('click',logInput);
 eqBtn.addEventListener('click',calc);
@@ -170,6 +205,13 @@ negBtn.addEventListener('click',negative);
 percentBtn.addEventListener('click',percent);
 
 backBtn.addEventListener('click',backspace);
+
+
+border = document.querySelector('.border');
+
+
+
+
 
 
 
