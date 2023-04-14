@@ -73,12 +73,48 @@ function calc(){
                 } , 11 * 1000);
         }else if(y || y == 0){
             const answer = operate(x,y,z);
+            let ansSize = answer.toString();
+                    if(ansSize.length >7 && ansSize.includes('.') != false){
+                        display.style.fontSize = 12 + 'px';
+                            if (ansSize.length > 10){
+                                newAnswer = Number.parseFloat(answer).toExponential(3);
+                                display.innerText = newAnswer;
+                                inputArray.length = 0;
+                                operatorArray.splice(0,1);
+                                inputArray.push(answer);
+                                decBtn.disabled = false;
+                                return;
+                            }
+                        display.innerText = answer.toFixed(3)
+                        inputArray.length = 0;
+                        operatorArray.splice(0,1);
+                        inputArray.push(answer);
+                        decBtn.disabled = false;
+                        return;
+                    } else if(ansSize.length > 7) {
+                        display.style.fontSize = 12 + 'px';
+                            if(answer >= 1e9){
+                                newAnswer = Number.parseFloat(answer).toExponential(3);
+                                display.innerText = newAnswer;
+                                inputArray.length = 0;
+                                operatorArray.splice(0,1);
+                                inputArray.push(answer);
+                                decBtn.disabled = false;
+                                return;
+                            }
+                        display.innerText = answer;
+                        inputArray.length = 0;
+                        operatorArray.splice(0,1);
+                        inputArray.push(answer);
+                        decBtn.disabled = false;
+                        return;
+                    } 
+            
                 display.innerText = answer;
                 inputArray.length = 0;
                 operatorArray.splice(0,1);
                 inputArray.push(answer);
                 decBtn.disabled = false;
-                console.log(overFlow(answer)); // this allows answers > 1e9 to be presented in exponential notation; reason unknown
         }else if (!y){
             operatorArray.length = 0;
             operatorArray.push(z);
@@ -149,7 +185,6 @@ function sizeAdjust(){
     let input = display.innerText,
         fontSize = maxFont;
         display.style.fontSize = fontSize + 'px';
-        console.log(input.length)
 
         while(fontSize > minFont && input.length > 7){
             fontSize--;
@@ -162,13 +197,12 @@ function sizeAdjust(){
         maxVal = 1e9,
         decimal = input.includes('.');
         
-
         if(input >= maxVal){
             display.innerText = Number.parseFloat(input).toExponential(2)
         } else if(decimal != false){
             round = input.split('.')[1].length;
-            if(round > 3){
-                display.innerText = Number.parseFloat(input).toExponential(2)
+            if(round > 4 && input.length >7){
+                display.innerText = Number.parseFloat(input).toExponential(3)
             }
         }
  }
@@ -218,16 +252,16 @@ border = document.querySelector('.border');
 
 
 opBtns.forEach(button => 
-         button.addEventListener('click',logInput))
+               button.addEventListener('click',logInput))
 
 opBtns.forEach(button =>
-        button.addEventListener('click',logOp))
+               button.addEventListener('click',logOp))
 
 opBtns.forEach(button => 
-            button.addEventListener('click',calc))     
+               button.addEventListener('click',calc))
 
 numBtns.forEach(button =>
-            button.addEventListener('click',logNum))
+                button.addEventListener('click',logNum))
             
 numBtns.forEach(button =>
                 button.addEventListener('click',check))
