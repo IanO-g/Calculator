@@ -52,7 +52,7 @@ function logInput(){
         }
 }
 
-function calc(e){
+function calc(){
     let calcArray = inputArray.slice().map(Number),
         x = calcArray[0],
         y = calcArray [1],
@@ -81,7 +81,7 @@ function calc(e){
                 console.log(overFlow(answer)); // this allows answers > 1e9 to be presented in exponential notation; reason unknown
         }else if (!y){
             operatorArray.length = 0;
-            operatorArray.push(e.target.innerText);
+            operatorArray.push(z);
             return;
         }
 }
@@ -173,6 +173,36 @@ function sizeAdjust(){
         }
  }
 
+ function keySupport(e){
+   let userInput = e.key;
+    if(userInput >= 0 && userInput <= 9 || userInput == '.' ){
+        numArray.push(userInput);
+        dispNum = numArray.slice().join('');
+        display.innerText = dispNum;
+    }else if(userInput == 'x' || userInput == '-' || userInput == '+' ){
+        operatorArray.push(userInput);
+        decBtn.disabled = false;
+        logInput();
+        calc();
+    }else if(userInput =='/'){
+        operatorArray.push('÷');
+        decBtn.disabled = false;
+        logInput();
+        calc();
+    }else if(userInput == 'Backspace'){
+        backspace();
+    }else if(userInput == '='){
+        logInput();
+        calc();
+    }else if(userInput == '%'){
+        percent();
+    }else if(userInput == '*'){
+        operatorArray.push('x');
+        decBtn.disabled = false;
+        logInput();
+        calc();
+    }
+}
 
 
 numBtns = document.querySelectorAll('.numbers');
@@ -184,6 +214,7 @@ eqBtn = document.querySelector('#equals');
 percentBtn = document.querySelector('#percent');
 decBtn = document.querySelector('#decimal');
 backBtn = document.querySelector('#backspace');
+border = document.querySelector('.border');
 
 
 opBtns.forEach(button => 
@@ -208,7 +239,7 @@ numBtns.forEach(button =>
                 button.addEventListener('click',overFlow))
 
 
-
+document.addEventListener('keydown',keySupport)
 
 
 eqBtn.addEventListener('click',logInput);
@@ -223,8 +254,7 @@ percentBtn.addEventListener('click',percent);
 backBtn.addEventListener('click',backspace);
 
 
-border = document.querySelector('.border');
 
-// decimals
-// keyboard support
+
+
 
