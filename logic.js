@@ -145,27 +145,34 @@ function check(){
 function sizeAdjust(){
     const maxFont = 16;
           minFont = 12;
+          maxLength = 10;
     let input = display.innerText,
         fontSize = maxFont;
-        canvas = document.createElement('canvas');
-        context = canvas.getContext('2d');
-        context.fontSize = fontSize + 'px';
-        width = context.measureText(input).width;
         display.style.fontSize = fontSize + 'px';
+        console.log(input.length)
 
-        while(fontSize > minFont && width > 39){
+        while(fontSize > minFont && input.length > 7){
             fontSize--;
             display.style.fontSize = fontSize +'px';
          }
- }
+}
 
  function overFlow(){
     let input = display.innerText,
-        maxVal = 1e9;
+        maxVal = 1e9,
+        decimal = input.includes('.');
+        
+
         if(input >= maxVal){
             display.innerText = Number.parseFloat(input).toExponential(2)
+        } else if(decimal != false){
+            round = input.split('.')[1].length;
+            if(round > 3){
+                display.innerText = Number.parseFloat(input).toExponential(2)
+            }
         }
  }
+
 
 
 numBtns = document.querySelectorAll('.numbers');
@@ -201,6 +208,9 @@ numBtns.forEach(button =>
                 button.addEventListener('click',overFlow))
 
 
+
+
+
 eqBtn.addEventListener('click',logInput);
 eqBtn.addEventListener('click',calc);
 
@@ -215,12 +225,6 @@ backBtn.addEventListener('click',backspace);
 
 border = document.querySelector('.border');
 
-
-
-
-
-
-
-
-// rounding and overflow
+// decimals
+// keyboard support
 
