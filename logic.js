@@ -70,7 +70,7 @@ function calc(){
                 display.innerText = 0;
                 border.classList.toggle('wrong');
                 display.classList.toggle('wrongDisplay');
-                } , 11 * 1000);
+                } , 8 * 1000);
         }else if(y || y == 0){
             const answer = operate(x,y,z);
                 display.innerText = answer;
@@ -91,7 +91,8 @@ function clear(){
     numArray.length = 0;
     display.innerText = 0;
     decBtn.disabled = false;
-    display.style.fontSize = 16 + 'px';
+    backBtn.disabled = false;
+    display.style.fontSize = 80 + 'px';
 }
 
 function negative(){
@@ -122,10 +123,11 @@ function backspace(){
     let backInput = display.innerText.slice(0,-1);
     
     const deciCheck = display.innerText.slice(-1);
-        if(deciCheck == '.'){
+          
+       if(deciCheck == '.'){
             decBtn.disabled = false;
         }
-
+    
     numArray.length = 0;
     numArray.push(backInput);
     display.innerText = backInput; 
@@ -143,8 +145,8 @@ function check(){
 }
 
 function sizeAdjust(){
-    const maxFont = 16;
-          minFont = 12;
+    const maxFont = 75;
+          minFont = 60;
           adjustContent = document.createElement('p');
        
           
@@ -156,10 +158,10 @@ function sizeAdjust(){
         adjustContent.innerText = input; 
         adjustContent.classList.add('adjust');
 
-         while(fontSize > minFont && adjustContent.clientWidth > display.clientWidth - 5 ){
-             fontSize -= 2;
+         while(fontSize > minFont && adjustContent.clientWidth > display.clientWidth - 20 ){
+             fontSize -= 7;
              display.style.fontSize = fontSize +'px';
-          }// -5 to adjust for padding
+          }// -20 to adjust for padding
 }
 
 function overFlow(){
@@ -169,12 +171,12 @@ function overFlow(){
         
         if(input >= maxVal){
             display.innerText = Number.parseFloat(input).toExponential(3);
-            display.style.fontSize = 15 + 'px';
+            display.style.fontSize = 70 + 'px';
         } else if(decimal != false){
             round = input.split('.')[1].length;
-            if(round > 9){
+            if(round > 7){
                 display.innerText = Number.parseFloat(input).toExponential(3);
-                display.style.fontSize = 16 + 'px';
+                display.style.fontSize = 70 + 'px';
             }
          }
 }
@@ -251,7 +253,9 @@ numBtns.forEach(button =>
                 button.addEventListener('click',overFlow))
 
 
-document.addEventListener('keydown',keySupport)
+document.addEventListener('keydown',keySupport);
+document.addEventListener('keydown',overFlow);
+document.addEventListener('keydown',sizeAdjust);
 
 
 eqBtn.addEventListener('click',logInput);
