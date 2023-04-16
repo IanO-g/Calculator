@@ -92,7 +92,7 @@ function clear(){
     display.innerText = 0;
     decBtn.disabled = false;
     backBtn.disabled = false;
-    display.style.fontSize = 80 + 'px';
+    display.style.fontSize = 75 + 'px';
 }
 
 function negative(){
