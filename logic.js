@@ -73,43 +73,6 @@ function calc(){
                 } , 11 * 1000);
         }else if(y || y == 0){
             const answer = operate(x,y,z);
-            let ansSize = answer.toString();
-                    if(ansSize.length >7 && ansSize.includes('.') != false){
-                        display.style.fontSize = 12 + 'px';
-                            if (ansSize.length > 10){
-                                newAnswer = Number.parseFloat(answer).toExponential(3);
-                                display.innerText = newAnswer;
-                                inputArray.length = 0;
-                                operatorArray.splice(0,1);
-                                inputArray.push(answer);
-                                decBtn.disabled = false;
-                                return;
-                            }
-                        display.innerText = answer.toFixed(3)
-                        inputArray.length = 0;
-                        operatorArray.splice(0,1);
-                        inputArray.push(answer);
-                        decBtn.disabled = false;
-                        return;
-                    } else if(ansSize.length > 7) {
-                        display.style.fontSize = 12 + 'px';
-                            if(answer >= 1e9){
-                                newAnswer = Number.parseFloat(answer).toExponential(3);
-                                display.innerText = newAnswer;
-                                inputArray.length = 0;
-                                operatorArray.splice(0,1);
-                                inputArray.push(answer);
-                                decBtn.disabled = false;
-                                return;
-                            }
-                        display.innerText = answer;
-                        inputArray.length = 0;
-                        operatorArray.splice(0,1);
-                        inputArray.push(answer);
-                        decBtn.disabled = false;
-                        return;
-                    } 
-            
                 display.innerText = answer;
                 inputArray.length = 0;
                 operatorArray.splice(0,1);
@@ -128,6 +91,7 @@ function clear(){
     numArray.length = 0;
     display.innerText = 0;
     decBtn.disabled = false;
+    display.style.fontSize = 16 + 'px';
 }
 
 function negative(){
@@ -181,33 +145,41 @@ function check(){
 function sizeAdjust(){
     const maxFont = 16;
           minFont = 12;
-          maxLength = 10;
+          adjustContent = document.createElement('p');
+       
+          
     let input = display.innerText,
         fontSize = maxFont;
         display.style.fontSize = fontSize + 'px';
 
-        while(fontSize > minFont && input.length > 7){
-            fontSize--;
-            display.style.fontSize = fontSize +'px';
-         }
+        display.appendChild(adjustContent);
+        adjustContent.innerText = input; 
+        adjustContent.classList.add('adjust');
+
+         while(fontSize > minFont && adjustContent.clientWidth > display.clientWidth - 5 ){
+             fontSize -= 2;
+             display.style.fontSize = fontSize +'px';
+          }// -5 to adjust for padding
 }
 
- function overFlow(){
+function overFlow(){
     let input = display.innerText,
         maxVal = 1e9,
         decimal = input.includes('.');
         
         if(input >= maxVal){
-            display.innerText = Number.parseFloat(input).toExponential(2)
+            display.innerText = Number.parseFloat(input).toExponential(3);
+            display.style.fontSize = 15 + 'px';
         } else if(decimal != false){
             round = input.split('.')[1].length;
-            if(round > 4 && input.length >7){
-                display.innerText = Number.parseFloat(input).toExponential(3)
+            if(round > 9){
+                display.innerText = Number.parseFloat(input).toExponential(3);
+                display.style.fontSize = 16 + 'px';
             }
-        }
- }
+         }
+}
 
- function keySupport(e){
+function keySupport(e){
    let userInput = e.key;
     if(userInput >= 0 && userInput <= 9 || userInput == '.' ){
         numArray.push(userInput);
@@ -260,6 +232,12 @@ opBtns.forEach(button =>
 opBtns.forEach(button => 
                button.addEventListener('click',calc))
 
+opBtns.forEach(button =>
+                button.addEventListener('click',sizeAdjust))
+ 
+opBtns.forEach(button => 
+                button.addEventListener('click',overFlow))
+
 numBtns.forEach(button =>
                 button.addEventListener('click',logNum))
             
@@ -278,6 +256,8 @@ document.addEventListener('keydown',keySupport)
 
 eqBtn.addEventListener('click',logInput);
 eqBtn.addEventListener('click',calc);
+eqBtn.addEventListener('click',sizeAdjust);
+eqBtn.addEventListener('click',overFlow);
 
 clearBtn.addEventListener('click',clear);
 

@@ -222,3 +222,8 @@ button.misc:hover {
     overflow: hidden;
     font-family: Orbitron;
 }
+
+.adjust{
+    visibility: hidden;
+    position: absolute;
+}
