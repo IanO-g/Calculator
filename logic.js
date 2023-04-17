@@ -42,6 +42,7 @@ function logOp(e){
     e.stopPropagation();
     operatorArray.push(e.target.innerText);
     decBtn.disabled = false; // allows for next input to contain a decimal
+    console.log(inputArray)
 }
 
 function logInput(){
@@ -52,13 +53,20 @@ function logInput(){
         }
 }
 
-function calc(e){
+function calc(){
     let calcArray = inputArray.slice().map(Number),
         x = calcArray[0],
         y = calcArray [1],
-        z = operatorArray[0];
-    
-        if(z == '÷' && y == 0){
+        z = operatorArray[0],
+        cLength = calcArray.length;
+  console.log(operatorArray)
+        if (cLength >= 3){
+            let newVal = calcArray.slice(-1);
+                inputArray.length = 0;
+                operatorArray.splice(0,1);
+                inputArray.push(newVal);
+                display.innerText = newVal;
+        }else if(z == '÷' && y == 0){
             const scrollText = document.createElement('p');
             const border = document.querySelector('.border');
             scrollText.setAttribute('id','scroll')
@@ -79,11 +87,46 @@ function calc(e){
                 inputArray.push(answer);
                 decBtn.disabled = false;
         }else if (!y){
-            newop = operatorArray.splice(-1);
+            newOp = operatorArray.splice(-1);
             operatorArray.length = 0;
-            operatorArray.push(newop);
+            operatorArray.push(newOp);
             return;
-        }
+        } 
+}
+
+function equals(){
+    let calcArray = inputArray.slice().map(Number),
+        x = calcArray[0],
+        y = calcArray [1],
+        z = operatorArray[0],
+        cLength = calcArray.length;
+    const answer = operate(x,y,z);
+    console.log(x,y,z)
+    console.log(calcArray)
+    if (cLength >= 3){
+        let newVal = calcArray.slice(-1);
+            inputArray.length = 0;
+            operatorArray.splice(0,1);
+            inputArray.push(newVal);
+            display.innerText = newVal;
+    } else if(y == undefined && z == undefined){
+        clear();
+        inputArray.push(x);
+        display.innerText = x; 
+        return;
+    } else if( z == undefined){
+        
+        clear();
+        display.innerText = y;
+        inputArray.push(y);
+        return;
+    } else if(y == undefined){
+        clear();
+        inputArray.push(x);
+        display.innerText = x; 
+        return;
+    }else {
+    display.innerText = answer;}
 }
 
 function clear(){
@@ -147,7 +190,7 @@ function check(){
 
 function sizeAdjust(){
     const maxFont = 75;
-          minFont = 60;
+          minFont = 55;
           adjustContent = document.createElement('p');
        
           
@@ -260,7 +303,7 @@ document.addEventListener('keydown',sizeAdjust);
 
 
 eqBtn.addEventListener('click',logInput);
-eqBtn.addEventListener('click',calc);
+eqBtn.addEventListener('click',equals);
 eqBtn.addEventListener('click',sizeAdjust);
 eqBtn.addEventListener('click',overFlow);
 
