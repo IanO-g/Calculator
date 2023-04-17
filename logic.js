@@ -52,7 +52,7 @@ function logInput(){
         }
 }
 
-function calc(){
+function calc(e){
     let calcArray = inputArray.slice().map(Number),
         x = calcArray[0],
         y = calcArray [1],
@@ -79,8 +79,9 @@ function calc(){
                 inputArray.push(answer);
                 decBtn.disabled = false;
         }else if (!y){
+            newop = operatorArray.splice(-1);
             operatorArray.length = 0;
-            operatorArray.push(z);
+            operatorArray.push(newop);
             return;
         }
 }
